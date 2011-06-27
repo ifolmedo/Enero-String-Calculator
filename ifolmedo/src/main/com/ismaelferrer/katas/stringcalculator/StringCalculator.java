@@ -8,9 +8,9 @@ import java.util.regex.Pattern;
 
 public class StringCalculator {
 
-	private static final char CHANGE_DELIMITER_SUFFIX = '\n';
 	private static final String DEFAULT_DELIMITER_REGEXP = "[,\n]";
 	private static final String CHANGE_DELIMITER_PREFIX = "//";
+	private static final char CHANGE_DELIMITER_SUFFIX = '\n';
 
 	public static int add(final String string) {
 		if (string.isEmpty()) return 0;
