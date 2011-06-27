@@ -25,11 +25,15 @@ public class StringCalculator {
 					CHANGE_DELIMITER_PREFIX.length(), 
 					string.indexOf(CHANGE_DELIMITER_SUFFIX));
 			delimiterRegExp = Pattern.quote(nonEscapedDelimiterRegExp);
-			processedString = string.substring(
-					string.indexOf(CHANGE_DELIMITER_SUFFIX)+1);
+			processedString = removeDelimiterChangeSubstring(string);
 		}
 		return addStringArray(processedString.split(delimiterRegExp));
 
+	}
+
+	private static String removeDelimiterChangeSubstring(final String string) {
+		return string.substring(
+				string.indexOf(CHANGE_DELIMITER_SUFFIX)+1);
 	}
 
 	private static int addStringArray(final String[] addendsArray) {
