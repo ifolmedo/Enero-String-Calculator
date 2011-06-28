@@ -45,20 +45,17 @@ public class StringCalculatorTest {
 	}
 	
 	@Test
-	public void whenSelectingNewDelimeterThenShludReturnTheSum() {
+	public void whenSelectingNewDelimeterThenShouldReturnTheSum() {
 		String [] sums={"//;\n1;2;7","//+\n19+10+221"};
 		int [] expectedResults ={10,250};
 		assertThamSumsResultsAreTheExpected(sums, expectedResults);
 	}
 	
 	@Test
-	public void testAddNegativeNumbers() {
-		try {
-			StringCalculator.add("-1,-2");
-			fail("An Illegal Argument Exception should be thrown");
-		} catch (IllegalArgumentException iae){
-			assertThat(iae.getMessage(), is("negatives not allowed: -1,-2"));
-		}
+	public void whenAddingGreaterThanAThousandNumbersThenShouldIgnoreThoseNumbers() {
+		String [] sums={"2,1000","3,7777,5","2000"};
+		int [] expectedResults ={1002,8,0};
+		assertThamSumsResultsAreTheExpected(sums, expectedResults);
 	}
 
 	private void assertThamSumsResultsAreTheExpected(String[] sums, int[] expectedResults) {
