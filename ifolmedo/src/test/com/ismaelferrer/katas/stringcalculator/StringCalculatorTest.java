@@ -57,6 +57,13 @@ public class StringCalculatorTest {
 		int [] expectedResults ={1002,8,0};
 		assertThamSumsResultsAreTheExpected(sums, expectedResults);
 	}
+	
+	@Test
+	public void whenSelectingNewMultiCharacterDelimeterThenShouldReturnTheSum() {
+		String [] sums={"//[***]\n1***2***7","//[+]\n19+10+221"};
+		int [] expectedResults ={10,250};
+		assertThamSumsResultsAreTheExpected(sums, expectedResults);
+	}	
 
 	private void assertThamSumsResultsAreTheExpected(String[] sums, int[] expectedResults) {
 		for(int i=0; i<sums.length; i++){		

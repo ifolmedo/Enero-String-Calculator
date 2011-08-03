@@ -10,27 +10,73 @@ public class StringCalculator {
 
 	private static final String DEFAULT_DELIMITER_REGEXP = "[,\n]";
 	private static final String CHANGE_DELIMITER_PREFIX = "//";
-	private static final char CHANGE_DELIMITER_SUFFIX = '\n';
+	private static final String CHANGE_DELIMITER_SUFFIX = "\n";
+	private static final String CHANGE_MULTICHARACTER_DELIMITER_PREFIX = CHANGE_DELIMITER_PREFIX + "[";
+	private static final String CHANGE_MULTICHARACTER_DELIMITER_SUFFIX = "]\n";
+
+	
 
 	public static int add(final String string) {
 		if (string.isEmpty()) return 0;
 		return addNonEmptyString(string);
 	}
 
-	private static int addNonEmptyString(final String string) {
-		String delimiterRegExp = DEFAULT_DELIMITER_REGEXP;
-		String processedString = string;
-		if (string.startsWith(CHANGE_DELIMITER_PREFIX)) {
-			String nonEscapedDelimiterRegExp = string.substring(
-					CHANGE_DELIMITER_PREFIX.length(), 
-					string.indexOf(CHANGE_DELIMITER_SUFFIX));
-			delimiterRegExp = Pattern.quote(nonEscapedDelimiterRegExp);
-			processedString = removeDelimiterChangeSubstring(string);
-		}
-		Collection<Integer> addends = convertToIntegerCollection(processedString.split(delimiterRegExp));
+	private static int addNonEmptyString(final String addOperationAsString) {
+		Collection<Integer> addends;
+		addends = parseAddends(addOperationAsString);
 		checkNegativeNumbers(addends);
 		addends = removeNumbersGreaterThanAThousand(addends);
 		return summation(addends);
+	}
+
+	private static Collection<Integer> parseAddends(final String addOperationAsString) {
+		String delimiterRegExp = obtainDelitimiterRegExp(addOperationAsString);
+		String addendsSubstring = obtainAddendsSubstring(addOperationAsString); 
+		return convertToIntegerCollection(addendsSubstring.split(delimiterRegExp));
+	}
+
+	private static String obtainDelitimiterRegExp(final String addOperationAsString) {
+		if (!isDelimiterChanged(addOperationAsString)) return DEFAULT_DELIMITER_REGEXP;
+		return obtainDelimiterChangedRegExp(addOperationAsString);
+	}
+
+	private static String obtainDelimiterChangedRegExp(
+			final String addOperationAsString) {
+		String changeDelimiterPrefix = CHANGE_DELIMITER_PREFIX;
+		String changeDelimiterSuffix = CHANGE_DELIMITER_SUFFIX;
+		if (isDelimiterChangedToMulticharacter(addOperationAsString)) {
+			changeDelimiterPrefix = CHANGE_MULTICHARACTER_DELIMITER_PREFIX;
+			changeDelimiterSuffix = CHANGE_MULTICHARACTER_DELIMITER_SUFFIX;
+		}
+		String nonEscapedDelimiterRegExp = addOperationAsString.substring(
+				changeDelimiterPrefix.length(), 
+				addOperationAsString.indexOf(changeDelimiterSuffix));
+		return Pattern.quote(nonEscapedDelimiterRegExp);
+	}
+
+	private static String obtainAddendsSubstring(final String addendsAsString) {
+		if (!isDelimiterChanged(addendsAsString)) return addendsAsString;
+		return addendsAsString.substring(
+				addendsAsString.indexOf(CHANGE_DELIMITER_SUFFIX)+1);
+	}
+
+	private static boolean isDelimiterChangedToMulticharacter(
+			final String addendsAsString) {
+		return addendsAsString.startsWith(CHANGE_MULTICHARACTER_DELIMITER_PREFIX) &&
+				addendsAsString.contains(CHANGE_MULTICHARACTER_DELIMITER_SUFFIX);
+	}
+
+	private static boolean isDelimiterChanged(final String addendsAsString) {
+		return addendsAsString.startsWith(CHANGE_DELIMITER_PREFIX);
+	}
+
+	private static Collection<Integer> convertToIntegerCollection(
+			final String[] numbersAsStrings){
+		Collection<Integer> integers = new ArrayList<Integer>();
+		for (String numberAsString : numbersAsStrings) {
+			integers.add(new Integer(numberAsString));
+		}
+		return integers;
 	}
 
 	private static Collection<Integer> removeNumbersGreaterThanAThousand(
@@ -42,20 +88,6 @@ public class StringCalculator {
 		return filteredIntegers;
 	}
 
-	private static String removeDelimiterChangeSubstring(final String string) {
-		return string.substring(
-				string.indexOf(CHANGE_DELIMITER_SUFFIX)+1);
-	}
-	
-	private static Collection<Integer> convertToIntegerCollection(
-			final String[] numbersAsStrings){
-		Collection<Integer> integers = new ArrayList<Integer>();
-		for (String numberAsString : numbersAsStrings) {
-			integers.add(new Integer(numberAsString));
-		}
-		return integers;
-	}
-	
 	private static void checkNegativeNumbers(
 			final Collection<Integer> numbers) {
 		List<Integer> illegalArguments = new ArrayList<Integer>();
@@ -83,6 +115,4 @@ public class StringCalculator {
 		}
 		return sum;
 	}
-	
-
 }
