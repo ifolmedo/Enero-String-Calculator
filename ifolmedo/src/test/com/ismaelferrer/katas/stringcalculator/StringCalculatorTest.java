@@ -63,7 +63,15 @@ public class StringCalculatorTest {
 		String [] sums={"//[***]\n1***2***7","//[+]\n19+10+221"};
 		int [] expectedResults ={10,250};
 		assertThamSumsResultsAreTheExpected(sums, expectedResults);
-	}	
+	}
+	
+	//TODO: Add more test cases for point 8
+	@Test
+	public void whenSelectingNewMultipleDelimetersThenShouldReturnTheSum() {
+		String [] sums={"[*][%]\n1*2%3"};
+		int [] expectedResults ={6};
+		assertThamSumsResultsAreTheExpected(sums, expectedResults);
+	}
 
 	private void assertThamSumsResultsAreTheExpected(String[] sums, int[] expectedResults) {
 		for(int i=0; i<sums.length; i++){		
