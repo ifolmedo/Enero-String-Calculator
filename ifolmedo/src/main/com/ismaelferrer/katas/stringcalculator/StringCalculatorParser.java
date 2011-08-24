@@ -70,7 +70,4 @@ public class StringCalculatorParser {
 		}
 		return integers;
 	}
-
-
-
 }
