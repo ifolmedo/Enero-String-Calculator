@@ -3,12 +3,15 @@ package com.ismaelferrer.katas.stringcalculator;
 import static org.junit.Assert.*;
 import static org.hamcrest.core.Is.*;
 
+import java.util.regex.Pattern;
+
 import org.junit.Test;
 
 import com.ismaelferrer.katas.stringcalculator.StringCalculator;
 
 public class StringCalculatorTest {
 
+	
 	@Test
 	public void whenAddingEmptyStringThenShouldReturnZero() {
 		assertThat(StringCalculator.add(""), is(0));
@@ -21,8 +24,6 @@ public class StringCalculatorTest {
 		assertThamSumsResultsAreTheExpected(sums, expectedResults);
 	}
 
-
-	
 	@Test
 	public void whenAddingTwoNumbersThenShouldReturnTheSum() {
 		String [] sums={"1,2","2,10","3,70","15,100"};
@@ -58,6 +59,7 @@ public class StringCalculatorTest {
 		assertThamSumsResultsAreTheExpected(sums, expectedResults);
 	}
 	
+	
 	@Test
 	public void whenSelectingNewMultiCharacterDelimeterThenShouldReturnTheSum() {
 		String [] sums={"//[***]\n1***2***7","//[+]\n19+10+221"};
@@ -65,14 +67,16 @@ public class StringCalculatorTest {
 		assertThamSumsResultsAreTheExpected(sums, expectedResults);
 	}
 	
-	//TODO: Add more test cases for point 8
 	@Test
 	public void whenSelectingNewMultipleDelimetersThenShouldReturnTheSum() {
-		String [] sums={"[*][%]\n1*2%3"};
-		int [] expectedResults ={6};
+		String [] sums={"//[*][%]\n1*2%3","//[..][**]\n55..22**23"};
+		int [] expectedResults ={6,100};
 		assertThamSumsResultsAreTheExpected(sums, expectedResults);
 	}
 
+	
+	
+	
 	private void assertThamSumsResultsAreTheExpected(String[] sums, int[] expectedResults) {
 		for(int i=0; i<sums.length; i++){		
 			int result = StringCalculator.add(sums[i]);
