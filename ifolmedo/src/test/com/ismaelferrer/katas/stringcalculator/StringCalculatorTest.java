@@ -1,13 +1,9 @@
 package com.ismaelferrer.katas.stringcalculator;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.core.Is.*;
-
-import java.util.regex.Pattern;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
-
-import com.ismaelferrer.katas.stringcalculator.StringCalculator;
 
 public class StringCalculatorTest {
 
