@@ -21,7 +21,7 @@ public class StringCalculator {
 	}
 
 	private static Collection<Integer> removeNumbersGreaterThanAThousand(
-			Collection<Integer> integers) {
+			final Collection<Integer> integers) {
 		Collection<Integer> filteredIntegers = new ArrayList<Integer>();
 		for(Integer integer: integers) {
 			if (integer <= 1000) filteredIntegers.add(integer);

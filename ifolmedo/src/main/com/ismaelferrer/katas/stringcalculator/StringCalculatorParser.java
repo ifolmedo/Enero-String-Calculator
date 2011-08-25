@@ -43,13 +43,13 @@ public class StringCalculatorParser {
 	}
 	
 	private static String obtainDelimiterChangeExpression(
-			String addOperationAsString) {
+			final String addOperationAsString) {
 		return addOperationAsString.substring(0, addOperationAsString.indexOf(CHANGE_DELIMITER_SUFFIX))
 				.substring(CHANGE_DELIMITER_PREFIX.length());
 	}
 
 	private static String convertDelimitierChangeExpressionToRegExp(
-			String delimiterChangeExpression) {
+			final String delimiterChangeExpression) {
 		return delimiterChangeExpression
 				.replaceAll(Pattern.quote("]["), "\\\\E)|(\\\\Q")
 				.replaceAll(Pattern.quote("["), "(\\\\Q")
